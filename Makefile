@@ -4,11 +4,11 @@
 
 INC_DIRS = -Isrc
 
-CFLAGS = -c -w
+CFLAGS = -c
 
 
 
-main: build/main.o build/productor.o build/recognizer.o build/getOptions.o build/writer.o
+main: build/main.o build/getOptions.o build/buffer1.o build/productor.o build/recognizer.o build/writer.o
 	@ u++ build/*.o -o bin/dna.run
 	@ echo "The compilation has been completed successfully"
 
@@ -18,13 +18,15 @@ build/main.o: src/main.cpp
 build/getOptions.o: src/getOptions.cpp
 	@ echo "src/getOptions.cpp"
 	@ u++  $(CFLAGS) $(INC_DIRS) src/getOptions.cpp -o build/getOptions.o
+build/buffer1.o: src/buffer1.cpp
+	@ echo "src/buffer1.cpp"
+	@ u++  $(CFLAGS) $(INC_DIRS) src/buffer1.cpp -o build/buffer1.o
 build/productor.o: src/productor.cpp
 	@ echo "src/productor.cpp"
 	@ u++  $(CFLAGS) $(INC_DIRS) src/productor.cpp -o build/productor.o
 build/recognizer.o: src/recognizer.cpp
 	@ echo "src/recognizer.cpp"
 	@ u++ $(CFLAGS) $(INC_DIRS) src/recognizer.cpp -o build/recognizer.o
-
 build/writer.o: src/writer.cpp
 	@ echo "src/writer.cpp"
 	@ u++ $(CFLAGS) $(INC_DIRS) src/writer.cpp -o build/writer.o
@@ -39,6 +41,6 @@ clean:
 run:
 	@ clear
 	@ echo "DNA"
-	@ ./bin/dna.run -i ./input/smalldna.txt -o ./output/output.txt -t 3
+	@ ./bin/dna.run -i ./input/smalldna.txt -o ./output/output.txt -t 3 -L 60 -l 60
 
 dna: clean main run

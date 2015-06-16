@@ -25,6 +25,6 @@ public:
   void setInput(string input);
   void setOutput(string output);
   //METHODS
-  void recognize();
+  string recognize();
 };
 #endif

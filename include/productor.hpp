@@ -11,20 +11,17 @@ using namespace std;
 
 _Task Productor {
 private:
-  string input;
-  int buffer1;
-  string* buffer;
+  string input_name;
+  ifstream input_file;
+  string adn;
 protected:
   void main();
 public:
   Productor();
-  Productor(string input, int buffer1);
-  ~Productor(){
-    delete[] buffer;
-  };
-  //GETTERS
-  string* getBuffer1();
-  //METHODS
-  void readFile();
+  Productor(string input_name);
+  ~Productor(){};
+  void openFile();
+  string readLine();
+  void closeFile();
 };
 #endif
