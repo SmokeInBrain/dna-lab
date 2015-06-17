@@ -1,38 +1,16 @@
 #include "../include/recognizer.hpp"
 
-Recognizer::Recognizer(){
-  this->input = "";
-  this->output= "";
-}
+Recognizer::Recognizer(Buffer &buf1, Buffer &buf2):buffer1(buf1), buffer2(buf2){}
 
-Recognizer::Recognizer(string input){
-  this->input = input;
-  this->output = "";
-}
-
-string Recognizer::getInput(){
-  return this->input;
-}
-
-string Recognizer::getOutput(){
-  return this->output;
-}
-
-void Recognizer::setInput(string input){
-  this->input = input;
-}
-
-void Recognizer::setOutput(string output){
-  this->output = output;
-}
 
 void Recognizer::main(){
-  recognize();
+  while(1){
+    recognize();
+  }
 }
 
-string Recognizer::recognize(){
-  string out = "";
-  string input = this->input;
+void Recognizer::recognize(){
+  string input = buffer1.pull();
   int state = 0;
   for(int i=0; i<input.length();i++){
     char c = input[i];
@@ -219,15 +197,16 @@ string Recognizer::recognize(){
       break;
     }
   }
-  
 
+  string out = "";
   if(state==6 || state==7 || state==8 || state==9 || state==10 || state==11 || state==12 || state==13 || state==14){
     out = "si";
   }else{
     out = "no";
   }
-  this->output = this->input + " "+ out;
-  cout << this->output<< endl;
-  return this-> output;
-
+  string result = "";
+  result = input + " "+ out;
+  //cout <<"Se reconoce "<< result<< endl;
+  buffer2.push(result);
+  //return result;
 }

@@ -1,5 +1,5 @@
-#ifndef BUFFER1_HPP
-#define BUFFER1_HPP
+#ifndef BUFFER_HPP
+#define BUFFER_HPP
 
 #include <uC++.h>
 #include <string>
@@ -9,16 +9,19 @@
 
 using namespace std;
 
-_Monitor Buffer1{
+_Monitor Buffer{
 private:
   int front, back, count, buffer1;
   string* elements;
+  bool full, empty;
 public:
-  Buffer1();
-  Buffer1(int buffer1);
-  ~Buffer1(){
+  Buffer();
+  Buffer(int buffer1);
+  ~Buffer(){
   	delete [] elements;
   };
+  bool getFull();
+  bool getEmpty();
   _Nomutex int query();
   void push(string element);
   string pull();

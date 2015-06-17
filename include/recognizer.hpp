@@ -4,7 +4,7 @@
 #include <uC++.h>
 #include <string>
 #include <iostream>
-#include <regex>
+#include "../include/buffer.hpp"
 
 using namespace std;
 
@@ -12,19 +12,14 @@ _Task Recognizer {
 private:
   string input;
   string output;
+  Buffer &buffer1;
+  Buffer &buffer2;
 protected:
   void main();
 public:
-  Recognizer();
-  Recognizer(string input);
+  Recognizer(Buffer &buf1, Buffer &buf2);
   ~Recognizer(){};
-  //GETTERS
-  string getInput();
-  string getOutput();
-  //SETTERS
-  void setInput(string input);
-  void setOutput(string output);
   //METHODS
-  string recognize();
+  void recognize();
 };
 #endif

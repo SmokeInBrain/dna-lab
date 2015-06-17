@@ -1,40 +1,55 @@
-#include "../include/buffer1.hpp"
+#include "../include/buffer.hpp"
 
-Buffer1::Buffer1(){
+Buffer::Buffer(){
   this->front = 0;
   this->back = 0;
   this->count = 0;
   this->buffer1=0;
+  this->full= false;
+  this->empty=true;
   this->elements = NULL;
 }
 
-Buffer1::Buffer1(int buffer1){
+Buffer::Buffer(int buffer1){
   this->front = 0;
   this->back = 0;
   this->count = 0;
+  this->full= false;
+  this->empty=true;
   this->buffer1=buffer1;
   this->elements = new string[this->buffer1];
 }
 
-_Nomutex int Buffer1::query(){
+_Nomutex int Buffer::query(){
   return count;
 }
 
-void Buffer1::push(string element){
-  //cout<<buffer1<<endl;
+bool Buffer::getFull(){
+  return this->full;
+}
+
+bool Buffer::getEmpty(){
+  return this->empty;
+}
+
+void Buffer::push(string element){
   if(this->count==this->buffer1){
-    _Accept(remove);
+    this->full=true;
+    //cout<<"Se llena buffer"<<endl;
+    _Accept(pull);
   }
-  //cout<<this->back<<endl;
+  this->empty=false;
+  //cout<<element<<endl;
   this->elements[this->back]=element;
   this->back = (this->back+1)%this->buffer1;
   this->count+=1;
-  //cout<<"Llego aca"<<endl;
+
 }
 
-string Buffer1::pull(){
+string Buffer::pull(){
   if(this->count==0){
-    _Accept(insert);
+    this->empty=true;
+    _Accept(push);
   }
   string element = this->elements[this->front];
   this->front=(this->front+1)%this->buffer1;

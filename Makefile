@@ -8,7 +8,7 @@ CFLAGS = -c
 
 
 
-main: build/main.o build/getOptions.o build/buffer1.o build/productor.o build/recognizer.o build/writer.o
+main: build/main.o build/getOptions.o build/buffer.o build/productor.o build/recognizer.o build/writer.o
 	@ u++ build/*.o -o bin/dna.run
 	@ echo "The compilation has been completed successfully"
 
@@ -18,9 +18,9 @@ build/main.o: src/main.cpp
 build/getOptions.o: src/getOptions.cpp
 	@ echo "src/getOptions.cpp"
 	@ u++  $(CFLAGS) $(INC_DIRS) src/getOptions.cpp -o build/getOptions.o
-build/buffer1.o: src/buffer1.cpp
+build/buffer.o: src/buffer.cpp
 	@ echo "src/buffer1.cpp"
-	@ u++  $(CFLAGS) $(INC_DIRS) src/buffer1.cpp -o build/buffer1.o
+	@ u++  $(CFLAGS) $(INC_DIRS) src/buffer.cpp -o build/buffer.o
 build/productor.o: src/productor.cpp
 	@ echo "src/productor.cpp"
 	@ u++  $(CFLAGS) $(INC_DIRS) src/productor.cpp -o build/productor.o
@@ -41,6 +41,6 @@ clean:
 run:
 	@ clear
 	@ echo "DNA"
-	@ ./bin/dna.run -i ./input/smalldna.txt -o ./output/output.txt -t 3 -L 60 -l 60
+	@ ./bin/dna.run -i ./input/smalldna.txt -o ./output/output.txt -t 3
 
 dna: clean main run

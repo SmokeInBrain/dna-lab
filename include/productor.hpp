@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "../include/buffer.hpp"
+
 
 using namespace std;
 
@@ -14,14 +16,17 @@ private:
   string input_name;
   ifstream input_file;
   string adn;
+  bool end;
+  Buffer &buffer;
 protected:
   void main();
 public:
-  Productor();
-  Productor(string input_name);
-  ~Productor(){};
+  Productor(string input_name, Buffer &buf);
+  ~Productor(){
+    this->input_file.close();
+  };
+  bool getEnd();
   void openFile();
-  string readLine();
-  void closeFile();
+  void readLine();
 };
 #endif

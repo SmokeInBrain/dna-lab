@@ -2,7 +2,8 @@
 #include "../include/getOptions.hpp"
 #include "../include/productor.hpp"
 #include "../include/recognizer.hpp"
-#include "../include/buffer1.hpp"
+#include "../include/buffer.hpp"
+#include "../include/writer.hpp"
 
 using namespace std;
 
@@ -10,26 +11,22 @@ void uMain::main() {
   getOptions options = getOptions();
   options.GetOpt(argc, argv);
   string input = options.getInput();
-  int buffer1 = options.getBuffer1();
+  string output = options.getOutput();
+  int buffer1num = options.getBuffer1();
+  int buffer2num = options.getBuffer2();
   int tasks = options.getTasks();
-  Productor *productor = new Productor(input);
-  Buffer1 *buffer = new Buffer1(buffer1);
-  buffer->push(productor->readLine());
+  Buffer buffer1(buffer1num);
+  Buffer buffer2(buffer2num);
+  Productor productor(input, buffer1);
+  Recognizer *recognizers[tasks];
+  for (int i = 0;  i < tasks; i++) {
+    recognizers[i] = new Recognizer(buffer1, buffer2);
+  }
+  Writer writer(output, buffer2);
 
-  Recognizer *recognizer = new Recognizer(buffer->pull());
+  for (int i = 0;  i < tasks; i++) {
+    delete recognizers[i];
+  }
 
-  delete productor;
-  delete buffer;
-  delete recognizer;
-  //while(1){
-  //buffer->insert(productor->readLine());
-  //}
-  //string* buffer;
-  //buffer = productor->getBuffer1();
-  //cout << buffer[1]<< endl;
-  //for(int i=0; i<buffer1; i++){
-  //  Recognizer *recognizer = new Recognizer(buffer[i]);
-  //  delete recognizer;
-  //}
-  //Recognizer recognizers[tasks];
+
 }
