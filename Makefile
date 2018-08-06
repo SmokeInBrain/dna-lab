@@ -2,7 +2,7 @@
 # DNA
 # by Miguel Cárcamo
 
-INC_DIRS = -Isrc
+INC_DIRS = -Iinclude
 
 CFLAGS = -c
 
